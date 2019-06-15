@@ -1,8 +1,8 @@
 package com.question.app.controller;
 
 import com.question.app.model.Question;
-import com.question.app.model.ScheduledEmails;
-import com.question.app.repository.IScheduledEmailsRepository;
+import com.question.app.model.ScheduledEmail;
+import com.question.app.repository.IScheduledEmailRepository;
 import com.question.app.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +18,7 @@ public class QuestionController {
     QuestionService questionService;
 
     @Autowired
-    IScheduledEmailsRepository scheduledEmailsRepository;
+    IScheduledEmailRepository scheduledEmailsRepository;
 
     @Autowired
     public QuestionController(QuestionService questionService) {
@@ -38,7 +38,7 @@ public class QuestionController {
     }
 
     @GetMapping("/test")
-    public List<ScheduledEmails> testGet() {
+    public List<ScheduledEmail> testGet() {
         return scheduledEmailsRepository.findAll();
 
     }

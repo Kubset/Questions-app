@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name="scheduledEmail")
-public class ScheduledEmails {
+public class ScheduledEmail {
 
     @Id
     @Column(name="scheduled_id")

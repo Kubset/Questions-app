@@ -13,9 +13,10 @@ import java.util.List;
 import java.util.Optional;
 
 import static java.util.Objects.isNull;
+import static java.util.stream.Collectors.toList;
 
 @Service
-public class QuestionService implements IQuestionService{
+public class QuestionService implements IQuestionService {
 
 
     @Autowired
@@ -23,7 +24,6 @@ public class QuestionService implements IQuestionService{
 
     @Autowired
     ICategoryRepository categoryRepository;
-
 
 
     @Override
@@ -35,7 +35,7 @@ public class QuestionService implements IQuestionService{
     public void saveQuestion(Question question) {
         Optional<Category> c = categoryRepository.findByName(question.getCategory().getName());
 
-        if(false) {
+        if (false) {
             System.out.println("error");
         } else {
             question.getCategory().setId(c.get().getId());
@@ -43,7 +43,16 @@ public class QuestionService implements IQuestionService{
         questionRepository.save(question);
     }
 
-    public List<Question> getQuestionsByCategoryName(String name) {
-        return questionRepository.getQuestionsByCategoryName(name);
+    public List<Question> getQuestionsByCategory(Category category) {
+        return questionRepository.getQuestionsByCategoryName(category.getName());
     }
+
+    public List<Question> getQuestionsByCategory(List<Category> categories) {
+        return categories
+                .stream()
+                .map(this::getQuestionsByCategory)
+                .flatMap(List::stream)
+                .collect(toList());
+    }
+
 }

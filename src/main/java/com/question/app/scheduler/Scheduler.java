@@ -56,6 +56,7 @@ public class Scheduler {
 
 
     private String generateBody(List<Category> categories) {
+        int i=0;
 
         List<Question> questions = questionService.getQuestionsByCategory(categories);
         Collections.shuffle(questions);
@@ -63,7 +64,11 @@ public class Scheduler {
 
         StringBuilder sb = new StringBuilder("Example set of questions: \n");
 
-        questions.forEach(q -> sb.append(q.getQuestion()).append("\n"));
+        questions.forEach(q -> sb.append("(")
+                                 .append(q.getCategory().toString().toUpperCase())
+                                 .append(")  ")
+                                 .append(q.getQuestion())
+                                 .append("\n"));
 
         return sb.toString();
 

@@ -37,7 +37,7 @@ public class EmailService {
             defaultEmailService.send(email);
         } catch(Exception e) {
 
-            System.out.println("mail error");
+            System.out.println("mail error" + e);
         }
     }
 

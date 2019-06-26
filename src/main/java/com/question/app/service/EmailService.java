@@ -21,13 +21,13 @@ public class EmailService {
     }
 
     public void sendEmail(String recipient, String body) {
-        String subject = "subject";
-        String personal = "personal";
+        String subject = "${mail.default.subject}";
+        String personal = "${mail.default.personal}";
 
         try {
 
             final Email email = DefaultEmail.builder()
-                    .from(new InternetAddress("tomasz.kwiatkowski.8588@gmail.com", "Test"))
+                    .from(new InternetAddress("tomasz.kwiatkowski.8588@gmail.com", personal))
                     .to(Lists.newArrayList(new InternetAddress(recipient, personal)))
                     .subject(subject)
                     .body(body)

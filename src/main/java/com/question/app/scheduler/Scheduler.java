@@ -38,6 +38,8 @@ public class Scheduler {
 
         List<ScheduledEmail> scheduledEmailList = scheduledEmailService.getAll();
         Long time = System.currentTimeMillis();
+        System.out.println(scheduledEmailList);
+        System.out.println(time);
 
         scheduledEmailList.stream()
                 .filter(scheduledEmails -> scheduledEmails.getFireTime() < time)
@@ -65,7 +67,7 @@ public class Scheduler {
         StringBuilder sb = new StringBuilder("Example set of questions: \n");
 
         questions.forEach(q -> sb.append("(")
-                                 .append(q.getCategory().toString().toUpperCase())
+                                 .append(q.getCategory().getName().toUpperCase())
                                  .append(")  ")
                                  .append(q.getQuestion())
                                  .append("\n"));

@@ -19,12 +19,23 @@ public class ScheduledEmail {
 
     private String recipient;
 
+    private String topic;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "scheduled_email_category",
             joinColumns = @JoinColumn(name = "scheduled_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<Category> choosenCategories;
+
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
 
     public long getId() {
         return id;

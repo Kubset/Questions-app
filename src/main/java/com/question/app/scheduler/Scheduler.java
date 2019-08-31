@@ -46,7 +46,7 @@ public class Scheduler {
                 .forEach(scheduledEmails -> {
                     scheduledEmails.setFireTime(scheduledEmailService.getNewFireTime(scheduledEmails.getCron()));
                     scheduledEmailService.saveScheduledEmail(scheduledEmails);
-                    emailService.sendEmail(scheduledEmails.getRecipient(), generateBody(scheduledEmails.getChoosenCategories()));
+                    emailService.sendEmail(scheduledEmails.getRecipient(), generateBody(scheduledEmails.getChoosenCategories()), scheduledEmails.getTopic());
 
                     System.out.println("email sent to" + scheduledEmails.getRecipient());
                 });

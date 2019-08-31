@@ -29,17 +29,17 @@ public class EmailService {
 
 
 
-    public void sendEmail(String recipient, String body) {
+    public void sendEmail(String recipient, String body, String topic) {
 
         String personal = env.getProperty("mail.default.pesonal");
-        String subject = env.getProperty("mail.default.subject");
+//        String subject = env.getProperty("mail.default.subject");
 
         try {
 
             final Email email = DefaultEmail.builder()
                     .from(new InternetAddress("tomasz.kwiatkowski.8588@gmail.com", personal))
                     .to(Lists.newArrayList(new InternetAddress(recipient, personal)))
-                    .subject(subject)
+                    .subject(topic)
                     .body(body)
                     .encoding("UTF-8").build();
 

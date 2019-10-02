@@ -58,7 +58,7 @@ public class CategoryService {
         return categoryRepository.findByName(name);
     }
 
-    public String getTreeByName(String name) {
+    public String getStringTreeByName(String name) {
         Category c = getByName(name).get();
         StringBuilder sb = new StringBuilder();
         sb.append(c.getName()).append("\n");
@@ -66,6 +66,10 @@ public class CategoryService {
 
         return sb.toString();
 
+    }
+
+    public Category getTreeByName(String name) {
+        return getByName(name).get();
     }
 
     public List<Category> getAllCategories() {

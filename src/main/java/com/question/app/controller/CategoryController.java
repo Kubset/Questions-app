@@ -5,6 +5,7 @@ import com.question.app.service.CategoryService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("category")
@@ -26,8 +27,13 @@ public class CategoryController {
         return categoryService.saveCategory(category);
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("tree/{name}")
     public String getCategoryTree(@PathVariable(value = "name") String name) {
+        return categoryService.getStringTreeByName(name);
+    }
+
+    @GetMapping("/{name}")
+    public Category getCategory(@PathVariable(value = "name") String name) {
         return categoryService.getTreeByName(name);
     }
 

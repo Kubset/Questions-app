@@ -14,6 +14,7 @@ public class Category {
 
     private String name;
 
+    @JsonIgnore
     @ManyToOne
     @JoinTable(
             name = "category_category",

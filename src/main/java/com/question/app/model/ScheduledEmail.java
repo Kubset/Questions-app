@@ -1,5 +1,7 @@
 package com.question.app.model;
 
+import com.question.app.model.enums.SchedulerStatus;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
@@ -20,6 +22,11 @@ public class ScheduledEmail {
     private String recipient;
 
     private String topic;
+
+    @Enumerated(EnumType.STRING)
+    private SchedulerStatus status;
+
+    private int questionsNumber;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -69,6 +76,21 @@ public class ScheduledEmail {
         this.recipient = recipient;
     }
 
+    public SchedulerStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(SchedulerStatus status) {
+        this.status = status;
+    }
+
+    public int getQuestionsNumber() {
+        return questionsNumber;
+    }
+
+    public void setQuestionsNumber(int questionsNumber) {
+        this.questionsNumber = questionsNumber;
+    }
 
     public List<Category> getChoosenCategories() {
         return choosenCategories;

@@ -16,6 +16,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import java.util.Collections;
 import java.util.List;
 
+import static com.question.app.model.enums.SchedulerStatus.RUNNING;
+
 @EnableScheduling
 @Configuration
 public class Scheduler {
@@ -42,11 +44,12 @@ public class Scheduler {
         System.out.println(time);
 
         scheduledEmailList.stream()
-                .filter(scheduledEmails -> scheduledEmails.getFireTime() < time)
+                .filter(scheduledEmail -> scheduledEmail.getFireTime() < time)
+                .filter(scheduledEmail -> scheduledEmail.getStatus().equals(RUNNING))
                 .forEach(scheduledEmails -> {
                     scheduledEmails.setFireTime(scheduledEmailService.getNewFireTime(scheduledEmails.getCron()));
                     scheduledEmailService.saveScheduledEmail(scheduledEmails);
-                    emailService.sendEmail(scheduledEmails.getRecipient(), generateBody(scheduledEmails.getChoosenCategories()), scheduledEmails.getTopic());
+                    emailService.sendEmail(scheduledEmails.getRecipient(), generateBody(scheduledEmails.getChoosenCategories(), scheduledEmails.getQuestionsNumber()), scheduledEmails.getTopic());
 
                     System.out.println("email sent to" + scheduledEmails.getRecipient());
                 });
@@ -57,12 +60,12 @@ public class Scheduler {
 
 
 
-    private String generateBody(List<Category> categories) {
+    private String generateBody(List<Category> categories, int questionsNumber) {
         int i=0;
 
         List<Question> questions = questionService.getQuestionsByCategory(categories);
         Collections.shuffle(questions);
-        questions = questions.subList(0, 5);
+        questions = questions.subList(0, questionsNumber);
 
         StringBuilder sb = new StringBuilder("Example set of questions: \n");
 

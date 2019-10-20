@@ -18,10 +18,18 @@ public class Question {
 
     Integer max_points;
 
+    Long insertDate;
+
     @OneToOne
-//    @OneToOne(cascade = {CascadeType.})
     Category category;
 
+    public Long getInsertDate() {
+        return insertDate;
+    }
+
+    public void setInsertDate(Long insertDate) {
+        this.insertDate = insertDate;
+    }
 
     public Category getCategory() {
         return category;

@@ -35,6 +35,11 @@ public class QuestionService implements IQuestionService {
     public void saveQuestion(Question question) {
         Optional<Category> c = categoryRepository.findByName(question.getCategory().getName());
 
+        if(isNull(question.getInsertDate())) {
+            question.setInsertDate(System.currentTimeMillis());
+        }
+
+        //not yet implemented
         if (false) {
             System.out.println("error");
         } else {

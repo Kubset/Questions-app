@@ -8,17 +8,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
+//TODO: Add endpoints for managing scheduled emails.
+/**
+ * Simple controller for scheduling emails
+ * @author Jakub Setla
+ */
 @RestController
 @RequestMapping("/scheduler")
 public class ScheduledEmailController {
 
-    ScheduledEmailService scheduledEmailService;
+    private ScheduledEmailService scheduledEmailService;
 
     @Autowired
     public ScheduledEmailController(ScheduledEmailService scheduledEmailService) {
         this.scheduledEmailService = scheduledEmailService;
     }
 
+
+    /**
+     * Scheduling email with set of categories
+     * @param scheduledEmail
+     * @return newly created scheduledEmail with assigned id and default values
+     */
     @PostMapping
     public ScheduledEmail addScheduledEmail(@RequestBody ScheduledEmail scheduledEmail) {
         return scheduledEmailService.saveScheduledEmail(scheduledEmail);

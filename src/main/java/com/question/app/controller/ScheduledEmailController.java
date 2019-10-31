@@ -2,6 +2,8 @@ package com.question.app.controller;
 
 import com.question.app.model.ScheduledEmail;
 import com.question.app.service.ScheduledEmailService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/scheduler")
 public class ScheduledEmailController {
 
+    private Logger log = LoggerFactory.getLogger(this.getClass());
+
     private ScheduledEmailService scheduledEmailService;
 
     @Autowired
@@ -33,6 +37,7 @@ public class ScheduledEmailController {
      */
     @PostMapping
     public ScheduledEmail addScheduledEmail(@RequestBody ScheduledEmail scheduledEmail) {
+        log.info("Scheduling email with category set {}", scheduledEmail);
         return scheduledEmailService.saveScheduledEmail(scheduledEmail);
     }
 

@@ -15,7 +15,7 @@ import java.util.List;
 
 
 //TODO: remove getAllQuestions endpoint when will be not used
-//TODO: add endpoint for move question from one category to another
+//TODO: add PUT endpoint for move between categories and to edit question
 /**
  * Simple controller for managing questions
  * @author Jakub Setla
@@ -55,6 +55,7 @@ public class QuestionController {
      */
     @PostMapping
     public ResponseEntity<Question> saveQuestion(@RequestBody Question question) {
+        log.info("Creating question {}", question);
         questionService.saveQuestion(question);
         return ResponseEntity.status(HttpStatus.OK).body(question);
     }

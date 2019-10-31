@@ -26,4 +26,8 @@ public class HeaderModifierAdvice implements ResponseBodyAdvice<Object> {
         response.getHeaders().add("Access-Control-Allow-Origin", "*");
         return body;
     }
+
+
+
+
 }

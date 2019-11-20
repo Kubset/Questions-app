@@ -91,7 +91,7 @@ public class QuestionService implements IQuestionService {
         Collections.sort(questions, new Comparator<Question>() {
             @Override
             public int compare(Question q1, Question q2) {
-                return q1.getMax_points() - q2.getMax_points();
+                return q2.getMax_points() - q1.getMax_points();
             }
         });
 

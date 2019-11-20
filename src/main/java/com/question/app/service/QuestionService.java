@@ -99,17 +99,14 @@ public class QuestionService implements IQuestionService {
         if(questions.size() <= questionsNumber) {
             log.warn("not enough questions {}/{}", questions.size(), questionsNumber);
             return questions;
-        } else if(questions.size() <= questionsNumber * randomnessFactor) {
-            log.warn("not too high randomness factor {}", randomnessFactor);
+        } else if(questionsNumber >= questions.size() * randomnessFactor) {
+            log.warn("not enough questions for randomness factor {}", randomnessFactor);
+            Collections.shuffle(questions);
+            return questions.subList(0, (int)(questions.size() * randomnessFactor));
         } else {
-            questions = questions.subList(0, (int)(questions.size() * randomnessFactor));
+            Collections.shuffle(questions);
+            return questions.subList(0, questionsNumber);
         }
-
-        Collections.shuffle(questions);
-        return questions.subList(0, questionsNumber);
-
-
-
     }
 
 }

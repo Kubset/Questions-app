@@ -60,7 +60,7 @@ public class Scheduler {
 
     private String generateBody(List<Category> categories, int questionsNumber) {
 
-        List<Question> questions = questionService.getRandomQuestionList(categories, questionsNumber);
+        List<Question> questions = questionService.getScoredQuestionList(categories, questionsNumber, 0.6F);
 
 
         StringBuilder sb = new StringBuilder("Example set of questions: \n");

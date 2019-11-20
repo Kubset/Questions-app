@@ -60,4 +60,10 @@ public class QuestionController {
         return ResponseEntity.status(HttpStatus.OK).body(question);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Question> updateQuestion(@RequestBody Question question, @PathVariable(value = "id") int id) {
+        //TODO: implement
+        return null;
+    }
+
 }

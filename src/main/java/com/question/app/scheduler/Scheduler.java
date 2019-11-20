@@ -58,22 +58,23 @@ public class Scheduler {
     }
 
 
-
-
     private String generateBody(List<Category> categories, int questionsNumber) {
-        int i=0;
 
-        List<Question> questions = questionService.getQuestionsByCategory(categories);
-        Collections.shuffle(questions);
-        questions = questions.subList(0, questionsNumber);
+        List<Question> questions = questionService.getRandomQuestionList(categories, questionsNumber);
+
 
         StringBuilder sb = new StringBuilder("Example set of questions: \n");
 
         questions.forEach(q -> sb.append("(")
-                                 .append(q.getCategory().getName().toUpperCase())
-                                 .append(")  ")
-                                 .append(q.getQuestion())
-                                 .append("\n"));
+                .append(q.getCategory().getName().toUpperCase())
+                .append(")  ")
+                .append(q.getQuestion())
+                .append("\n"));
+
+        questions.forEach(question -> {
+            question.setPoints(question.getPoints() + 1);
+            questionService.updateQuestion(question);
+        });
 
         return sb.toString();
 

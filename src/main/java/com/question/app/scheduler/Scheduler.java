@@ -13,8 +13,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.question.app.model.enums.SchedulerStatus.RUNNING;
 
@@ -60,7 +63,7 @@ public class Scheduler {
 
     private String generateBody(List<Category> categories, int questionsNumber) {
 
-        List<Question> questions = questionService.getScoredQuestionList(categories, questionsNumber, 0.6F);
+        List<Question> questions = questionService.getScoredQuestionList(splitWildCards(categories), questionsNumber, 0.6F);
 
 
         StringBuilder sb = new StringBuilder("Example set of questions: \n");
@@ -78,5 +81,14 @@ public class Scheduler {
 
         return sb.toString();
 
+    }
+
+    private List<Category> splitWildCards(List<Category> categories) {
+        return categories.stream()
+                .map(category -> category.getName().charAt(category.getName().length() - 1) == '*' ?
+                        Collections.singletonList(category) :
+                        categoryService.flatTree(category))
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
     }
 }

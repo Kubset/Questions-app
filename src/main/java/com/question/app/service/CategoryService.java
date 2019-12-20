@@ -7,6 +7,7 @@ import com.question.app.repository.IQuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,10 +18,10 @@ import static java.util.Objects.isNull;
 public class CategoryService {
 
     @Autowired
-    ICategoryRepository categoryRepository;
+    private ICategoryRepository categoryRepository;
 
     @Autowired
-    IQuestionRepository questionRepository;
+    private IQuestionRepository questionRepository;
 
     public Category saveCategory(Category category) {
         if(isNull(category.getSuperCategory())) {
@@ -32,7 +33,7 @@ public class CategoryService {
             category.getSuperCategory()
                     .setId(categoryRepository
                     .findByName(category.getSuperCategory().getName())
-                    .orElseThrow(() -> new IndexOutOfBoundsException())
+                    .orElseThrow(IndexOutOfBoundsException::new)
                     .getId());
             System.out.println(category.getId());
         }
@@ -44,7 +45,7 @@ public class CategoryService {
             List<Category> categories = category.getSubCategories()
                     .stream()
                     .map(x -> categoryRepository.findByName(x.getName())
-                            .orElseThrow(() -> new IndexOutOfBoundsException()))
+                            .orElseThrow(IndexOutOfBoundsException::new))
                     .collect(Collectors.toList());
 
             category.setSubCategories(categories);
@@ -69,7 +70,24 @@ public class CategoryService {
     }
 
     public Category getTreeByName(String name) {
-        return getByName(name).get();
+        return getByName(name).orElse(new Category());
+    }
+
+    public List<Category> flatListByName(String name) {
+        return flatTree(getTreeByName(name));
+
+    }
+
+    //TODO: move to utils or sth else
+    public List<Category> flatTree(Category category) {
+        List<Category> categories = new ArrayList<>();
+        categories.add(category);
+
+        if(category.getSubCategories().size() != 0) {
+          category.getSubCategories().forEach(c -> categories.addAll(flatTree(c)));
+        }
+
+        return categories;
     }
 
     public List<Category> getAllCategories() {

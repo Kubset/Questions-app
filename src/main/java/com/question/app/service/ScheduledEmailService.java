@@ -1,5 +1,6 @@
 package com.question.app.service;
 
+import com.question.app.model.Category;
 import com.question.app.model.ScheduledEmail;
 import com.question.app.repository.ICategoryRepository;
 import com.question.app.repository.IScheduledEmailRepository;
@@ -7,8 +8,7 @@ import org.quartz.CronExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,6 +24,13 @@ public class ScheduledEmailService {
     }
 
     public ScheduledEmail saveScheduledEmail(ScheduledEmail scheduledEmail) {
+
+        scheduledEmail.setChoosenCategories(scheduledEmail.getChoosenCategories().stream()
+                .map(category -> category.getName().charAt(category.getName().length() - 1) == '*' ?
+                        Collections.singletonList(category) : flatTree(category))
+                .flatMap(List::stream)
+                .collect(Collectors.toList()));
+
         scheduledEmail.setChoosenCategories(scheduledEmail.getChoosenCategories().stream().map(category -> categoryRepository.findByName(category.getName()).get()).collect(Collectors.toList()));
         scheduledEmailsRepository.save(scheduledEmail);
         return scheduledEmail;
@@ -46,4 +53,17 @@ public class ScheduledEmailService {
         }
         return nextExecution;
     }
+
+    //TODO: move to utils or sth else
+    private List<Category> flatTree(Category category) {
+        List<Category> categories = new ArrayList<>();
+        categories.add(category);
+
+        if(category.getSubCategories().size() != 0) {
+            category.getSubCategories().forEach(c -> categories.addAll(flatTree(c)));
+        }
+
+        return categories;
+    }
+
 }

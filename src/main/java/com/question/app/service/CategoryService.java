@@ -73,23 +73,6 @@ public class CategoryService {
         return getByName(name).orElse(new Category());
     }
 
-    public List<Category> flatListByName(String name) {
-        return flatTree(getTreeByName(name));
-
-    }
-
-    //TODO: move to utils or sth else
-    public List<Category> flatTree(Category category) {
-        List<Category> categories = new ArrayList<>();
-        categories.add(category);
-
-        if(category.getSubCategories().size() != 0) {
-          category.getSubCategories().forEach(c -> categories.addAll(flatTree(c)));
-        }
-
-        return categories;
-    }
-
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
     }

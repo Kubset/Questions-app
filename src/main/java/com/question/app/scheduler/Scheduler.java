@@ -63,7 +63,7 @@ public class Scheduler {
 
     private String generateBody(List<Category> categories, int questionsNumber) {
 
-        List<Question> questions = questionService.getScoredQuestionList(splitWildCards(categories), questionsNumber, 0.6F);
+        List<Question> questions = questionService.getScoredQuestionList(categories, questionsNumber, 0.6F);
 
 
         StringBuilder sb = new StringBuilder("Example set of questions: \n");
@@ -83,12 +83,5 @@ public class Scheduler {
 
     }
 
-    private List<Category> splitWildCards(List<Category> categories) {
-        return categories.stream()
-                .map(category -> category.getName().charAt(category.getName().length() - 1) == '*' ?
-                        Collections.singletonList(category) :
-                        categoryService.flatTree(category))
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
-    }
+
 }

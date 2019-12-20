@@ -27,7 +27,8 @@ public class ScheduledEmailService {
 
         scheduledEmail.setChoosenCategories(scheduledEmail.getChoosenCategories().stream()
                 .map(category -> category.getName().charAt(category.getName().length() - 1) == '*' ?
-                        Collections.singletonList(category) : flatTree(category))
+                        splitWildCard(category.getName()) :
+                        Collections.singletonList(category))
                 .flatMap(List::stream)
                 .collect(Collectors.toList()));
 
@@ -54,8 +55,20 @@ public class ScheduledEmailService {
         return nextExecution;
     }
 
+
+    private List<Category> splitWildCard(String categoryName) {
+        Category root = categoryRepository
+                .findByName(categoryName.substring(0, categoryName.length()-1))
+                .orElse(new Category());
+
+        return flatTree(root);
+    }
+
+
     //TODO: move to utils or sth else
     private List<Category> flatTree(Category category) {
+
+
         List<Category> categories = new ArrayList<>();
         categories.add(category);
 

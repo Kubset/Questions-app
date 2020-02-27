@@ -15,7 +15,7 @@ import reactor.util.annotation.NonNull;
 
 import java.util.Map;
 
-public class LambdaRequestHandler implements RequestHandler<Map<String,String>, String> {
+public class LambdaRequestHandler implements RequestHandler<Object, String> {
 
     Scheduler scheduler;
 
@@ -28,10 +28,10 @@ public class LambdaRequestHandler implements RequestHandler<Map<String,String>, 
         this.scheduler = BeanUtil.getBean(Scheduler.class);
     }
 
-    public String handleRequest(Map<String,String> input, Context context) {
+    public String handleRequest(Object input, Context context) {
 
 
-        context.getLogger().log("Input: " + input);
+        context.getLogger().log("Input: " + input.toString());
         context.getLogger().log(scheduler.toString());
         scheduler.emailSender();
         return "scheduler sent.";

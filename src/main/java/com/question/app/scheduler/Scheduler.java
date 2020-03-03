@@ -50,12 +50,12 @@ public class Scheduler {
         scheduledEmailList.stream()
                 .filter(scheduledEmail -> scheduledEmail.getFireTime() < time)
                 .filter(scheduledEmail -> scheduledEmail.getStatus().equals(RUNNING))
-                .forEach(scheduledEmails -> {
-                    scheduledEmails.setFireTime(scheduledEmailService.getNewFireTime(scheduledEmails.getCron()));
-                    scheduledEmailService.saveScheduledEmail(scheduledEmails);
-                    emailService.sendEmail(scheduledEmails.getRecipient(), generateBody(scheduledEmails.getChoosenCategories(), scheduledEmails.getQuestionsNumber()), scheduledEmails.getTopic());
+                .forEach(scheduledEmail -> {
+                    emailService.sendEmail(scheduledEmail.getRecipient(), generateBody(scheduledEmail.getChoosenCategories(), scheduledEmail.getQuestionsNumber()), scheduledEmail.getTopic());
+                    scheduledEmail.setFireTime(scheduledEmailService.getNewFireTime(scheduledEmail.getCron()));
+                    scheduledEmailService.saveScheduledEmail(scheduledEmail);
 
-                    System.out.println("email sent to" + scheduledEmails.getRecipient());
+                    System.out.println("email sent to" + scheduledEmail.getRecipient());
                 });
 
 

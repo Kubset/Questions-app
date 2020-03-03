@@ -1,6 +1,12 @@
 # Questions-app
 
 
+###Email configuration
+for @gmail account please remember to turn off two step verification, 
+enable access by less secure apps and unlock captcha if necessary.
+https://myaccount.google.com/lesssecureapps
+https://accounts.google.com/b/0/DisplayUnlockCaptcha
+
 
 ## Api documentation
 

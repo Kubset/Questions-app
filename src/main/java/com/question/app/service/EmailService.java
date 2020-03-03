@@ -32,12 +32,13 @@ public class EmailService {
     public void sendEmail(String recipient, String body, String topic) {
 
         String personal = env.getProperty("mail.default.pesonal");
+        String username = env.getProperty("spring.mail.username");
 //        String subject = env.getProperty("mail.default.subject");
 
         try {
 
             final Email email = DefaultEmail.builder()
-                    .from(new InternetAddress("tomasz.kwiatkowski.8588@gmail.com", personal))
+                    .from(new InternetAddress(username, personal))
                     .to(Lists.newArrayList(new InternetAddress(recipient, personal)))
                     .subject(topic)
                     .body(body)

@@ -1,0 +1,31 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    driver-class-name: ${DB_DRIVER:com.mysql.jdbc.Driver}
+    url: ${DB_URL:localhost}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    testWhileIdle: true
+    validationQuery: SELECT 1
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+      scheduler:
+        enabled: true
+
+mail:
+  scheduler:
+    cron: 0 * * * * ?
+  default:
+    subject: Random Set of interview questions
+    personal: questions

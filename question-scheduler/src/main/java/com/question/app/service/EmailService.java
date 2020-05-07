@@ -22,10 +22,10 @@ public class EmailService {
     @Autowired
     private Environment env;
 
-//    @Autowired
-//    public EmailService(it.ozimov.springboot.mail.service.EmailService defaultEmailService) {
-//        this.defaultEmailService = defaultEmailService;
-//    }
+    @Autowired
+    public EmailService(it.ozimov.springboot.mail.service.EmailService defaultEmailService) {
+        this.defaultEmailService = defaultEmailService;
+    }
 
 
 
@@ -33,7 +33,7 @@ public class EmailService {
 
         String personal = env.getProperty("mail.default.pesonal");
         String username = env.getProperty("spring.mail.username");
-//        String subject = env.getProperty("mail.default.subject");
+        String subject = env.getProperty("mail.default.subject");
 
         try {
 
@@ -54,5 +54,5 @@ public class EmailService {
 
 
 
-
+//
 }

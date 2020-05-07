@@ -1,6 +1,7 @@
 package com.question.app.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.List;
 

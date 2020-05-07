@@ -1,6 +1,6 @@
 package com.question.app.model;
 
-import org.hibernate.validator.constraints.UniqueElements;
+//import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 
